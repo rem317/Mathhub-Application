@@ -1,4 +1,4 @@
-
+const API_BASE_URL = 'https://polylearn-backend-production-f531.up.railway.app';
 // script.js - MathHub Application with Complete Database-Driven Progress Tracking
 // Includes lesson management, practice exercises, quiz system, and full progress integration
 
