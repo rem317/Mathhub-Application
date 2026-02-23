@@ -1,9 +1,6 @@
 
 const express = require('express');
-const corsOptions = {
-  origin: ['http://localhost:8080', 'http://localhost:3000']
-};
-app.use(cors(corsOptions));
+const cors = require('cors');  // ✅ SIGURADUHIN NASA ITAAS ITO
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -15,29 +12,43 @@ const crypto = require('crypto');
 
 const app = express();
 
-
-const corsOptions = {
-  origin: [
-    'http://localhost:8080',
+// ============================================
+// ✅ SINGLE CORS CONFIGURATION - DELETE ALL OTHERS
+// ============================================
+const allowedOrigins = [
     'http://localhost:3000',
-    'https://mathhub-frontend.vercel.app'  // ✅ I-ADD ITO!
-  ],
-  credentials: true,  // IMPORTANTE para sa login
-  optionsSuccessStatus: 200
-};
+    'http://localhost:8080',
+    'http://127.0.0.1:5500',
+    'http://localhost:5500',
+    'http://localhost:3001',
+    'https://mathhub-frontend.vercel.app'
+];
 
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: function(origin, callback) {
+        // Allow requests with no origin (like mobile apps, Postman, etc)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With']
+}));
+
+// Handle preflight requests
+app.options('*', cors());
+
 
 
 // ============================================
 // MIDDLEWARE
 // ============================================
-app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:3001'],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
-}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
