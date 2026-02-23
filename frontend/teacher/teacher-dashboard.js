@@ -100,7 +100,7 @@ const subjectData = {
 };
 
 // ===== API CONFIGURATION =====
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_URL = 'https://polylearn-backend-production-f531.up.railway.app';
 let authToken = localStorage.getItem('authToken');
 
 // ============================================
