@@ -1,6 +1,9 @@
 
 const express = require('express');
-const cors = require('cors');
+const corsOptions = {
+  origin: ['http://localhost:8080', 'http://localhost:3000']
+};
+app.use(cors(corsOptions));
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -12,6 +15,18 @@ const crypto = require('crypto');
 
 const app = express();
 
+
+const corsOptions = {
+  origin: [
+    'http://localhost:8080',
+    'http://localhost:3000',
+    'https://mathhub-frontend.vercel.app'  // ✅ I-ADD ITO!
+  ],
+  credentials: true,  // IMPORTANTE para sa login
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 
 // ============================================
